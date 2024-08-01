@@ -1,0 +1,3 @@
+
+›typescript:S6478T"RMove this component definition out of the parent component and pass data as props.(—±Èý8¥Ð®ò‰2J$79745b5e-9292-462e-b32f-9d3216f17c71
+³typescript:S6606f"jPrefer using nullish coalescing operator (`??`) instead of a logical or (`||`), as it is a safer operator.(ÿ¥Ë¼8¥Ð®ò‰2J$51390e63-7d2f-4123-9187-0c173c85a0d6

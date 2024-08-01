@@ -8,7 +8,7 @@ interface ForgotPasswordProps extends React.HTMLAttributes<HTMLDivElement> {}
 export function ForgotPasswordButton({ className, ...props }: ForgotPasswordProps) {
 
     return (
-        <Button variant="link">
+        <Button variant="link" className="flex">
             Forgot Password?
         </Button>
     )

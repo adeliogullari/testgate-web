@@ -1,11 +1,22 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import Cookies from "js-cookie";
 
 export interface LoginRequestBody {
-    email?: string,
-    password?: string,
+    email?: string;
+    password?: string;
 }
 
-export const login = createAsyncThunk(
+export interface ErrorResponse {
+    detail: string;
+}
+
+export const login = createAsyncThunk<
+    { access_token: string; refresh_token: string },
+    LoginRequestBody,
+    {
+        rejectValue: ErrorResponse
+    }
+>(
     'login',
     async(loginRequestBody: LoginRequestBody, thunkAPI) => {
         const response = await fetch('http://localhost:8000/api/v1/auth/login', {
@@ -48,6 +59,12 @@ export const loginSlice = createSlice({
         updatePassword: (state, action) => {
             state.password = action.payload;
         },
+        updateAccessToken: (state, action) => {
+            state.accessToken = action.payload;
+        },
+        updateRefreshToken: (state, action) => {
+            state.refreshToken = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(login.pending, (state, action) => {
@@ -57,13 +74,16 @@ export const loginSlice = createSlice({
             state.loading = 'succeeded';
             state.accessToken = action.payload.access_token;
             state.refreshToken = action.payload.refresh_token;
+            Cookies.set("accessToken", action.payload.access_token)
+            Cookies.set("refreshToken", action.payload.refresh_token)
         })
         builder.addCase(login.rejected, (state, action) => {
             state.loading = 'failed';
+            state.error = action.payload?.detail;
         })
     }
 })
 
-export const {updateEmail, updatePassword} = loginSlice.actions
+export const {updateEmail, updatePassword, updateAccessToken, updateRefreshToken} = loginSlice.actions
 
 export default loginSlice.reducer

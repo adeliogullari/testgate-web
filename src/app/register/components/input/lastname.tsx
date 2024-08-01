@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Input } from "@/components/ui/input"
 import { useAppSelector, useAppDispatch } from '@/lib/hooks'
-import { updateEmail } from "@/app/login/lib/slice";
+import { updateLastname } from "@/app/register/lib/slice";
 
 interface LastnameInputProps extends React.HTMLAttributes<HTMLDivElement> {
     readonly isLoading?: boolean
@@ -14,7 +14,7 @@ interface State {
 }
 
 export function LastnameInput({ className, ...props }: LastnameInputProps) {
-    const lastname = useAppSelector((state) => state.loginReducer.email)
+    const lastname = useAppSelector((state) => state.registerReducer.lastname)
     const dispatch = useAppDispatch()
 
     const [values, setValues] = React.useState<State>({
@@ -23,7 +23,7 @@ export function LastnameInput({ className, ...props }: LastnameInputProps) {
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({ ...values, [prop]: event.target.value });
-        dispatch(updateEmail(event.target.value))
+        dispatch(updateLastname(event.target.value))
     };
 
     return (

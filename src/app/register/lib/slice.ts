@@ -1,18 +1,28 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import {LoginRequestBody} from "@/app/login/lib/slice";
 
 export interface RegisterRequestBody {
-    firstname: string,
-    lastname: string,
-    username: string,
-    email: string,
-    password: string,
-    confirm_password: string
+    firstname?: string,
+    lastname?: string,
+    username?: string,
+    email?: string,
+    password?: string,
 }
 
-export const register = createAsyncThunk(
+export interface ErrorResponse {
+    detail: string;
+}
+
+export const register = createAsyncThunk<
+    { firstname: string; lastname: string, username: string, email: string },
+    LoginRequestBody,
+    {
+        rejectValue: ErrorResponse
+    }
+>(
     'register',
     async(registerRequestBody: RegisterRequestBody, thunkAPI) => {
-        const response = await fetch('https://dummyjson.com/auth/register', {
+        const response = await fetch('http://localhost:8000/api/v1/auth/register', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(registerRequestBody)
@@ -30,7 +40,6 @@ export interface RegisterState {
     username: string,
     email: string,
     password: string,
-    confirmPassword: string
     loading: 'idle' | 'pending' | 'succeeded' | 'failed',
     error?: string
 }
@@ -41,7 +50,6 @@ const RegisterInitialState = {
     username: '',
     email: '',
     password: '',
-    confirmPassword: '',
     loading: 'idle',
     error: undefined,
 } as RegisterState
@@ -65,9 +73,6 @@ export const registerSlice = createSlice({
         updatePassword: (state, action) => {
             state.password = action.payload;
         },
-        updateConfirmPassword: (state, action) => {
-            state.confirmPassword = action.payload;
-        },
     },
     extraReducers: (builder) => {
         builder.addCase(register.pending, (state, action) => {
@@ -78,11 +83,11 @@ export const registerSlice = createSlice({
         })
         builder.addCase(register.rejected, (state, action) => {
             state.loading = 'failed';
-            state.error = "action.payload.message";
+            state.error = action.payload?.detail;
         })
     }
 })
 
-export const {updateFirstname, updateLastname, updateUsername, updateEmail, updatePassword,updateConfirmPassword} = registerSlice.actions
+export const {updateFirstname, updateLastname, updateUsername, updateEmail, updatePassword} = registerSlice.actions
 
 export default registerSlice.reducer

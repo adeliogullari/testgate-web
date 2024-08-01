@@ -1,25 +1,23 @@
 import * as React from "react";
-import {EmailInput} from "@/app/login/components/input/email";
-import {PasswordInput} from "@/app/login/components/input/password";
-import {LoginButton} from "@/app/register/components/button/login";
-import {RememberMeCheckbox} from "@/app/login/components/checkbox/remember-me"
-import {ForgotPasswordButton} from "@/app/login/components/button/forgot-password";
-import {GoogleButton} from "@/app/login/components/button/google";
-import {GithubButton} from "@/app/login/components/button/github";
+import {EmailInput} from "@/app/register/components/input/email";
+import {PasswordInput} from "@/app/register/components/input/password";
+import {RegisterButton} from "@/app/register/components/button/register";
+import {GoogleButton} from "@/app/register/components/button/google";
+import {GithubButton} from "@/app/register/components/button/github";
 import {Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription} from "@/components/ui/card"
 import {FirstnameInput} from "@/app/register/components/input/firstname";
 import {LastnameInput} from "@/app/register/components/input/lastname";
-import {ConfirmPasswordInput} from "@/app/register/components/input/confirm-password";
 import {UsernameInput} from "@/app/register/components/input/username";
+import {SignUpButton} from "@/app/register/components/button/signup";
 
-export default function SignUp() {
+export default function Register() {
     return (
         <main className="flex h-screen justify-center items-center">
-            <Card>
+            <Card className="bg-white rounded-3xl shadow-md p-5 w-96">
                 <CardHeader className="flex items-center">
                     <CardTitle className="text-2xl">Register</CardTitle>
                 </CardHeader>
-                <CardContent className="grid gap-5">
+                <CardContent className="grid grid-cols-1 gap-5">
                     <div className="grid grid-cols-2 gap-2">
                         <FirstnameInput/>
                         <LastnameInput/>
@@ -27,8 +25,7 @@ export default function SignUp() {
                     <UsernameInput/>
                     <EmailInput/>
                     <PasswordInput/>
-                    <ConfirmPasswordInput/>
-                    <LoginButton/>
+                    <RegisterButton/>
                     <div className="relative">
                         <div className="absolute inset-0 flex items-center">
                             <span className="w-full border-t"/>
@@ -42,10 +39,15 @@ export default function SignUp() {
                     <GoogleButton/>
                     <GithubButton/>
                 </CardContent>
-                <CardFooter>
-                    <CardDescription>
-                        Dont have an account? Sign up
-                    </CardDescription>
+                <CardFooter className="flex flex-col items-start">
+                    <CardContent className="grid">
+                        <CardDescription className="flex items-center">
+                            <div className="text-muted-foreground">
+                                {"Don't have an account"}
+                            </div>
+                            <SignUpButton/>
+                        </CardDescription>
+                    </CardContent>
                 </CardFooter>
             </Card>
         </main>

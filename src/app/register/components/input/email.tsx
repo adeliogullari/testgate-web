@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Input } from "@/components/ui/input"
 import { useAppSelector, useAppDispatch } from '@/lib/hooks'
-import { updateEmail } from "@/app/login/lib/slice";
+import { updateEmail } from "@/app/register/lib/slice";
 
 interface EmailInputProps extends React.HTMLAttributes<HTMLDivElement> {
     readonly isLoading?: boolean
@@ -14,7 +14,7 @@ interface State {
 }
 
 export function EmailInput({ className, ...props }: EmailInputProps) {
-    const email = useAppSelector((state) => state.loginReducer.email)
+    const email = useAppSelector((state) => state.registerReducer.email)
     const dispatch = useAppDispatch()
 
     const [values, setValues] = React.useState<State>({
@@ -27,14 +27,12 @@ export function EmailInput({ className, ...props }: EmailInputProps) {
     };
 
     return (
-        <>
-            {email}
-            <Input
-                id="email"
-                placeholder="Email"
-                type="email"
-                value={email}
-                onChange={handleChange('email')}
-                disabled={props.isLoading}/></>
+        <Input
+            id="email"
+            placeholder="Email"
+            type="email"
+            value={email}
+            onChange={handleChange('email')}
+            disabled={props.isLoading}/>
     )
 }

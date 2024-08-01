@@ -3,7 +3,7 @@
 import * as React from "react"
 import {Input} from "@/components/ui/input"
 import { useAppSelector, useAppDispatch } from '@/lib/hooks'
-import { updateEmail, updatePassword } from "@/app/login/lib/slice";
+import { updatePassword } from "@/app/register/lib/slice";
 
 interface PasswordInputProps extends React.HTMLAttributes<HTMLDivElement> {
     readonly isLoading?: boolean
@@ -18,7 +18,7 @@ interface PasswordInputProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function PasswordInput({ className, ...props }: PasswordInputProps) {
-    const password = useAppSelector((state) => state.loginReducer.password)
+    const password = useAppSelector((state) => state.registerReducer.password)
     const dispatch = useAppDispatch()
 
     const [values, setValues] = React.useState<State>({
@@ -30,8 +30,6 @@ export function PasswordInput({ className, ...props }: PasswordInputProps) {
         dispatch(updatePassword(event.target.value))
     };
     return (
-        <>
-            {password}
         <Input
             id="password"
             placeholder="Password"
@@ -39,6 +37,6 @@ export function PasswordInput({ className, ...props }: PasswordInputProps) {
             value={password}
             onChange={handleChange('password')}
             disabled={props.isLoading}
-        /></>
+        />
     )
 }
